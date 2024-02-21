@@ -14,17 +14,32 @@ const app = express();
 const PORT = 5000;
 
 const shopify = shopifyApi({
+    
+    apiVersion: LATEST_API_VERSION,
+    // restResources,
+    billing: undefined,
     apiKey: process.env.API_KEY,
     apiSecretKey: process.env.API_SECRET_KEY,
-    scopes: ["read_products"],
-    hostName: "localhost:5000",
-    apiVersion: LATEST_API_VERSION,
-    isEmbeddedApp: false
-})
+    isCustomeStoreApp: true,
+    scopes: ["write_customers", "write_products", "read_products"],
+    isEmbeddedApp: false,
+    hostName: process.env.HOST_NAME, //is string??
+
+    // auth: {
+    //     path: "/api/auth",
+    //     callbackPath: "/api/auth/callback",
+    // },
+    // webhooks: {
+    //     path: "/api/webhooks",
+    // },
+    // sessionStorage: new SqliteSessionStorage(DB_Path),
+});
+
+const session = shopify.session.customAppSession("my-shop.myshopify.com");
 
 app.use("/generate-storefront-access-token", async (req, res) => {
     try{
-        const session = shopify.session;
+        // const session = shopify.session; //this is all better now? line 38
         console.log(shopify.session, "Shopify.session")
         const adminApiClient = new shopify.clients.Rest({session});
         // console.log(adminApiClient, "adminApiClient")
