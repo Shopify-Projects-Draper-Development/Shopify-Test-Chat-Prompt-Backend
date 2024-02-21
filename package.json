@@ -2,6 +2,7 @@
   "dependencies": {
     "@shopify/shopify-api": "^9.2.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.3",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6"
   }
